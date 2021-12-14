@@ -4,16 +4,18 @@ set -euo pipefail
 CURRENT_PATH=$(pwd -P)
 PYTHON_REF=null
 BASE_PATH="https://raw.githubusercontent.com/wbreza/pre-commit-hooks/main/detect-secrets"
-ASSETS=(
-    "scripts/setup.sh"
-    "scripts/uninstall.sh"
-    ".secrets.baseline"
-    "secrets-wordlist.txt"
-    ".pre-commit-config.yaml"
-)
 
 download() {
     echo "Downloading assets..."
+
+    mkdir -p scripts/detect-secrets
+    ASSETS=(
+        "scripts/setup.sh"
+        "scripts/uninstall.sh"
+        ".secrets.baseline"
+        "secrets-wordlist.txt"
+        ".pre-commit-config.yaml"
+    )
 
     for asset in ${ASSETS[@]}; do
         DEST_PATH="$CURRENT_PATH/$asset"
