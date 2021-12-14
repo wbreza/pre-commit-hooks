@@ -14,11 +14,11 @@ copy() {
         FILE_NAME=$(basename $asset)
         COPY_PATH="$DIR_PATH/$FILE_NAME"
 
-        if [[ $OVERWRITE == false && -f $COPY_PATH ]]; then
+        if [[ $OVERWRITE == false && -f "$COPY_PATH" ]]; then
             echo "$asset already exists. Skipping..."
         else
             echo "Downloading $asset..."
-            curl -# -o $COPY_PATH $BASE_PATH/$asset
+            curl -# -o "$COPY_PATH" $BASE_PATH/$asset
         fi
     done
 }
