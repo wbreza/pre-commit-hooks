@@ -7,7 +7,7 @@ PARENT_PATH=$(
     pwd -P
 )
 
-cd "$PARENT_PATH"
+source $PARENT_PATH/activate.sh
 
 VENV_PATH=${VIRTUAL_ENV:-}
 
@@ -25,11 +25,7 @@ cleanup() {
     rm -rf $PARENT_PATH
 }
 
-source ./activate.sh
-
 check_python
 ensure_env
 uninstall
 cleanup
-
-cd "$CURRENT_PATH"
