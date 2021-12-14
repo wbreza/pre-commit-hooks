@@ -33,6 +33,7 @@ download() {
         "scripts/setup.sh"
         "scripts/uninstall.sh"
         "scripts/scan.sh"
+        "scripts/audit.sh"
     )
 
     # Passes array by name
