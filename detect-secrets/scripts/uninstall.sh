@@ -2,6 +2,13 @@
 set -euo pipefail
 
 CURRENT_PATH=$(pwd -P)
+PARENT_PATH=$(
+    cd "$(dirname "${BASH_SOURCE[0]}")"
+    pwd -P
+)
+
+cd "$PARENT_PATH"
+
 VENV_PATH=${VIRTUAL_ENV:-}
 
 uninstall() {
@@ -17,7 +24,7 @@ cleanup() {
     rm -rf $VENV_PATH
 }
 
-source scripts/detect-secrets/activate.sh
+source ./activate.sh
 
 check_python
 ensure_env

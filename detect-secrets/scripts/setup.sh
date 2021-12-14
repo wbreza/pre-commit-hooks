@@ -1,5 +1,5 @@
 #!/bin/bash
-set -euxo pipefail
+set -euo pipefail
 
 CURRENT_PATH=$(pwd -P)
 BASE_PATH="https://raw.githubusercontent.com/wbreza/pre-commit-hooks/dev/detect-secrets"
@@ -44,6 +44,8 @@ download() {
 
     # Passes array by name
     copy ASSETS "$CURRENT_PATH"
+
+    chmod +x scripts/detect-secrets/*
 }
 
 install() {
