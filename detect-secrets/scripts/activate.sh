@@ -1,7 +1,8 @@
 #!/bin/bash
-set -euxo pipefail
+set -euo pipefail
 
 PYTHON_REF=null
+VENV_PATH=${VIRTUAL_ENV:-}
 
 check_python() {
     echo "Checking python version..."
@@ -33,5 +34,12 @@ activate() {
         . .venv/scripts/activate
     elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
         . .venv/scripts/activate
+    fi
+}
+
+ensure_env() {
+    if [[ -z $VENV_PATH ]]; then
+        activate
+        VENV_PATH=${VIRTUAL_ENV:-}
     fi
 }
