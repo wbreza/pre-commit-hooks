@@ -45,7 +45,7 @@ activate() {
 
 install() {
     echo 'Installing pre-commit framework...'
-    pip install pre-commit detect-secrets pyahocorasick
+    pip install pre-commit detect-secrets==1.0.3 pyahocorasick
 
     echo 'Installing pre-commit hooks from configuration...'
     pre-commit install
