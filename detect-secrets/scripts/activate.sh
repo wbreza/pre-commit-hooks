@@ -24,9 +24,14 @@ check_python() {
 }
 
 activate() {
-    echo "Creating environment for pre-commit @ '$CURRENT_PATH/.venv'"
-    $PYTHON_REF -m venv "$CURRENT_PATH/.venv"
+    VENV_PATH="$CURRENT_PATH/.venv"
 
+    if [[ ! -d "$VENV_PATH" ]]; then
+        echo "Creating environment @ '$VENV_PATH'"
+        $PYTHON_REF -m venv $VENV_PATH
+    fi
+
+    echo "Activating environment @ '$VENV_PATH'"
     if [ "$(uname)" == "Darwin" ]; then
         . .venv/bin/activate
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
