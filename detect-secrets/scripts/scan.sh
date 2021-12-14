@@ -2,8 +2,12 @@
 set -euo pipefail
 
 CURRENT_PATH=$(pwd -P)
+PARENT_PATH=$(
+    cd "$(dirname "${BASH_SOURCE[0]}")"
+    pwd -P
+)
 
-source ./scripts/detect-secrets/activate.sh
+source $PARENT_PATH/activate.sh
 
 check_python
 ensure_env
