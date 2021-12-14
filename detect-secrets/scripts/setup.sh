@@ -30,6 +30,7 @@ download() {
         "scripts/activate.sh"
         "scripts/setup.sh"
         "scripts/uninstall.sh"
+        "scripts/scan.sh"
     )
 
     # Passes array by name
@@ -57,5 +58,5 @@ install() {
 download
 source scripts/detect-secrets/activate.sh
 check_python
-activate
+ensure_env
 install
