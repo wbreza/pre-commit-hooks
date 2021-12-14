@@ -51,15 +51,6 @@ download() {
     chmod +x scripts/detect-secrets/*
 }
 
-install() {
-    echo 'Installing pre-commit framework...'
-    pip install pre-commit detect-secrets pyahocorasick
-
-    echo 'Installing pre-commit hooks from configuration...'
-    pre-commit install
-    pre-commit run --all-files
-}
-
 download
 source scripts/detect-secrets/activate.sh
 check_python
