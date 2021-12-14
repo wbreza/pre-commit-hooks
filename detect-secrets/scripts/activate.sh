@@ -24,7 +24,7 @@ check_python() {
 }
 
 activate() {
-    echo 'Creating environment for pre-commit...'
+    echo 'Creating environment for pre-commit @ "$CURRENT_PATH/.venv"'
     $PYTHON_REF -m venv "$CURRENT_PATH/.venv"
 
     if [ "$(uname)" == "Darwin" ]; then
