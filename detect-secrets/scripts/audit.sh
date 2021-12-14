@@ -13,7 +13,15 @@ check_python
 ensure_env
 
 if which detect-secrets >/dev/null 2>&1; then
+    VERSION=$(detect-secrets --version 2>&1 | awk '{print $2}')
+    BASELINE_PATH="$CURRENT_PATH/.secrets.baseline"
+
+    echo "Found 'detect-secrets' version $VERSION"
+
     detect-secrets audit .secrets.baseline
+
+    echo "Secrets baseline has been updated @ '$BASELINE_PATH' with the results of your audit"
+    echo "Please review all baseline updates before committing changes."
 else
     echo "detect-secrets not found. Run setup script and try again"
 fi
