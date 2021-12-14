@@ -52,7 +52,7 @@ download() {
 
 install() {
     echo 'Installing pre-commit framework...'
-    pip install pre-commit
+    pip install pre-commit detect-secrets pyahocorasick
 
     echo 'Installing pre-commit hooks from configuration...'
     pre-commit install
