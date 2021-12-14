@@ -1,63 +1,48 @@
 #!/bin/bash
-set -euo pipefail
+set -euxo pipefail
 
 CURRENT_PATH=$(pwd -P)
-PYTHON_REF=null
-BASE_PATH="https://raw.githubusercontent.com/wbreza/pre-commit-hooks/main/detect-secrets"
+BASE_PATH="https://raw.githubusercontent.com/wbreza/pre-commit-hooks/dev/detect-secrets"
+
+copy() {
+    name=$1[@]
+    DIR_PATH=$2
+    FILES=("${!name}")
+
+    for asset in ${FILES[@]}; do
+        FILE_NAME=$(basename $asset)
+        COPY_PATH="$DIR_PATH/$FILE_NAME"
+
+        if [[ -f $COPY_PATH ]]; then
+            echo "$asset already exists. Skipping..."
+        else
+            curl -# -o $COPY_PATH $BASE_PATH/$asset
+        fi
+    done
+}
 
 download() {
     echo "Downloading assets..."
 
     mkdir -p scripts/detect-secrets
-    ASSETS=(
+
+    SCRIPTS=(
+        "scripts/activate.sh"
         "scripts/setup.sh"
         "scripts/uninstall.sh"
+    )
+
+    # Passes array by name
+    copy SCRIPTS "$CURRENT_PATH/scripts/detect-secrets"
+
+    ASSETS=(
         ".secrets.baseline"
         "secrets-wordlist.txt"
         ".pre-commit-config.yaml"
     )
 
-    for asset in ${ASSETS[@]}; do
-        DEST_PATH="$CURRENT_PATH/$asset"
-        if [[ -f $DEST_PATH ]]; then
-            echo "$asset already exists. Skipping..."
-        else
-            curl -# -o $CURRENT_PATH/$asset $BASE_PATH/$asset
-        fi
-    done
-}
-
-check_python() {
-    echo "Checking python version..."
-
-    if which python3 >/dev/null 2>&1; then
-        PYTHON_REF="python3"
-    else
-        if which python >/dev/null 2>&1; then
-            PYTHON_REF="python"
-        else
-            echo "Python is not installed.  Install Python 3.8 and try again"
-            exit 1
-        fi
-    fi
-
-    PYTHON_VERSION=$($PYTHON_REF --version 2>&1 | awk '{print $2}')
-    echo "Found Python with version $PYTHON_VERSION"
-}
-
-setup_env() {
-    echo 'Creating environment for pre-commit...'
-    $PYTHON_REF -m venv .venv
-
-    if [ "$(uname)" == "Darwin" ]; then
-        . .venv/bin/activate
-    elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-        . .venv/bin/activate
-    elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
-        . .venv/scripts/activate
-    elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
-        . .venv/scripts/activate
-    fi
+    # Passes array by name
+    copy ASSETS "$CURRENT_PATH"
 }
 
 install() {
@@ -69,7 +54,8 @@ install() {
     pre-commit run --all-files
 }
 
-check_python
-setup_env
 download
+source scripts/detect-secrets/activate.sh
+check_python
+activate
 install
