@@ -2,7 +2,7 @@
 set -euo pipefail
 
 CURRENT_PATH=$(pwd -P)
-BASE_PATH="https://raw.githubusercontent.com/wbreza/pre-commit-hooks/dev/detect-secrets"
+BASE_PATH="https://raw.githubusercontent.com/wbreza/pre-commit-hooks/main/detect-secrets"
 
 copy() {
     name=$1[@]
@@ -34,6 +34,7 @@ download() {
         "scripts/uninstall.sh"
         "scripts/scan.sh"
         "scripts/audit.sh"
+        "scripts/report.sh"
     )
 
     # Passes array by name
