@@ -7,16 +7,17 @@ BASE_PATH="https://raw.githubusercontent.com/wbreza/pre-commit-hooks/dev/detect-
 copy() {
     name=$1[@]
     DIR_PATH=$2
-    OVERWRITE=$3 || $false
+    OVERWRITE=$3
     FILES=("${!name}")
 
     for asset in ${FILES[@]}; do
         FILE_NAME=$(basename $asset)
         COPY_PATH="$DIR_PATH/$FILE_NAME"
 
-        if [[ $OVERWRITE == $false && -f $COPY_PATH ]]; then
+        if [[ $OVERWRITE == false && -f $COPY_PATH ]]; then
             echo "$asset already exists. Skipping..."
         else
+            echo "Downloading $asset..."
             curl -# -o $COPY_PATH $BASE_PATH/$asset
         fi
     done
@@ -35,7 +36,7 @@ download() {
     )
 
     # Passes array by name
-    copy SCRIPTS "$CURRENT_PATH/scripts/detect-secrets" $true
+    copy SCRIPTS "$CURRENT_PATH/scripts/detect-secrets" true
 
     ASSETS=(
         ".secrets.baseline"
@@ -44,7 +45,7 @@ download() {
     )
 
     # Passes array by name
-    copy ASSETS "$CURRENT_PATH" $false
+    copy ASSETS "$CURRENT_PATH" false
 
     chmod +x scripts/detect-secrets/*
 }
