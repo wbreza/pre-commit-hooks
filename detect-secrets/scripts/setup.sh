@@ -24,7 +24,7 @@ copy() {
 }
 
 download() {
-    echo "Downloading assets..."
+    echo "Downloading assets from '$BASE_PATH'..."
 
     mkdir -p scripts/detect-secrets
 
