@@ -14,7 +14,7 @@ source ./activate.sh
 check_python
 ensure_env
 
-if which python3 >/dev/null 2>&1; then
+if which detect-secrets >/dev/null 2>&1; then
     detect-secrets scan \
         --baseline "$CURRENT_PATH/.secrets.baseline" \
         --word-list "$CURRENT_PATH/secrets-wordlist.txt"
