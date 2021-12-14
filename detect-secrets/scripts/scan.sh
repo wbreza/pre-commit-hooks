@@ -14,8 +14,12 @@ source ./activate.sh
 check_python
 ensure_env
 
-detect-secrets scan \
-    --baseline "$CURRENT_PATH/.secrets.baseline" \
-    --word-list "$CURRENT_PATH/secrets-wordlist.txt"
+if which python3 >/dev/null 2>&1; then
+    detect-secrets scan \
+        --baseline "$CURRENT_PATH/.secrets.baseline" \
+        --word-list "$CURRENT_PATH/secrets-wordlist.txt"
+else
+    echo "detect-secrets not found. Run setup script and try again"
+fi
 
 cd "$CURRENT_PATH"
