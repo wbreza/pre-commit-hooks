@@ -3,7 +3,7 @@ set -euo pipefail
 
 CURRENT_PATH=$(pwd -P)
 #BASE_PATH="https://raw.githubusercontent.com/wbreza/pre-commit-hooks/main/detect-secrets"
-BASE_PATH="https://2eb9-73-118-225-212.ngrok.io"
+BASE_PATH="https://raw.githubusercontent.com/wbreza/pre-commit-hooks/wabrez/add-scan-audit-output/detect-secrets"
 
 copy() {
     name=$1[@]

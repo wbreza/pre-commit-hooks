@@ -13,11 +13,10 @@ check_python
 ensure_env
 
 if which detect-secrets >/dev/null 2>&1; then
-    VERSION=$(detect-secrets --version 2>&1 | awk '{print $2}')
+    VERSION=$(detect-secrets --version)
     BASELINE_PATH="$CURRENT_PATH/.secrets.baseline"
 
-    echo "Found 'detect-secrets' version $VERSION"
-
+    echo "Found detect-secrets with version $VERSION"
     detect-secrets scan \
         --baseline .secrets.baseline \
         --word-list secrets-wordlist.txt
