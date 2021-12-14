@@ -22,6 +22,7 @@ cleanup() {
     echo "Cleaning up environment for pre-commit..."
     deactivate
     rm -rf $VENV_PATH
+    rm -rf $PARENT_PATH
 }
 
 source ./activate.sh
