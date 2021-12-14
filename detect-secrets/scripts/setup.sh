@@ -5,7 +5,8 @@ CURRENT_PATH=$(pwd -P)
 PYTHON_REF=null
 BASE_PATH="https://raw.githubusercontent.com/wbreza/pre-commit-hooks/main/detect-secrets"
 ASSETS=(
-    "setup.sh"
+    "scripts/setup.sh"
+    "scripts/uninstall.sh"
     ".secrets.baseline"
     "secrets-wordlist.txt"
     ".pre-commit-config.yaml"
