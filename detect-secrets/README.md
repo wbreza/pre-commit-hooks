@@ -3,7 +3,7 @@
 Installs the [Yelp! detects-secrets](https://github.com/yelp/detect-secrets) pre-commit hook into your existing Git repo.
 Starting a new project from scratch? Check out the [baseline security template](https://github.com/wbreza/baseline-security-seed) which provides the same functionality plus support for dev containers and includes an integrates Github workflow.
 
-## Installing
+## Configuring the Repo
 
 Run the setup script from the root of your git repo.
 
@@ -17,9 +17,20 @@ curl -s https://raw.githubusercontent.com/wbreza/pre-commit-hooks/main/detect-se
 The setup script performs the following:
 
 - Creates and activates a python virtual environment required by the tools
-- Downloads [required assets](https://github.com/wbreza/pre-commit-hooks/tree/main/detect-secrets) such as pre-commit configuration, secrets baseline and an empty word list
+- Downloads [required assets](https://github.com/wbreza/pre-commit-hooks/tree/main/detect-secrets) such as pre-commit configuration, secrets baseline and an empty word list as well as a set of helper scripts that you team use.
 - Installs the pre-commit framework
 - Configures the [pre-commit framework](https://www.pre-commit.com) with the Yelp! [detect-secrets](https://github.com/yelp/detect-secrets) hook
+
+> Commit the new changes (including the `scripts/detect-secrets` folder) into your repo mainline branch
+
+## Local Developer Setup
+
+After your repo has been initialized all developer on your team will need to setup their development environment
+
+```bash
+# Install and configures the pre-commit hook
+./scripts/detect-secrets/init.sh
+```
 
 **That's it** - Your git tooling will now run the secret detection on all future commits. 
 
@@ -30,6 +41,15 @@ The `setup` script installs a few example scripts that you can use to scan, audi
 These scripts simplify the complexity of managing and activating the dependent python virtual environments for you.
 
 > For complete control of your secret detection process review the [full usage documentation](https://github.com/yelp/detect-secrets#usage).
+
+### Common Issues
+
+Depending on the set of technologies included in your repo you may run into some of these common scenarios:
+
+**Catching secret like strings such as hashes in `package-lock.json`**
+
+In this case you can exclude these files from scanning by setting the `exclude` parameter in yoru `.pre-commit-config.yaml` file.
+The `exclude` parameter expects a regular expression as a value.
 
 ### Generate a baseline of all flagged items
 
@@ -62,18 +82,25 @@ It is your teams responsibility to prioritize and mitigate the items before they
 ./scripts/detect-secrets/report.sh
 ```
 
+### Scan staged files
+
+The `check` script will scan all git staged files.
+This is the same command that is run via the pre-commit hook in a ad-hoc script
+
+```bash
+# Calls the `detect-secrets-hook --baseline .secrets.baseline` command
+./scripts/detect-secrets/check.sh
+```
+
 ## Uninstalling
 
 Changed your mind and no longer want to use the detect-secrets pre-commit hook?
 Just execute the `uninstall.sh` script that was downloding during the setup process.
+This will uninstall the pre-commit hook from your git repo.
+You can now safely delete the scripts or other configuration files.
 
 ```bash
 ./scripts/detect-secrets/uninstall.sh
 ```
-
-The setup script performs the following:
-
-- Uninstalls the pre-commit framework
-- Cleans up the pre-commit environment
 
 > You will manually need to remove any pre-commit or detect-secrets configuration files if you no longer need them.

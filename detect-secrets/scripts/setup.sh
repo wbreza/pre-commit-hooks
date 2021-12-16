@@ -18,7 +18,7 @@ copy() {
             echo "$asset already exists. Skipping..."
         else
             echo "Downloading $asset..."
-            curl -# -o "$COPY_PATH" $BASE_PATH/$asset
+            curl -# -H 'Cache-Control: no-cache' -o "$COPY_PATH" $BASE_PATH/$asset
         fi
     done
 }
@@ -29,12 +29,13 @@ download() {
     mkdir -p scripts/detect-secrets
 
     SCRIPTS=(
+        "scripts/init.sh"
         "scripts/activate.sh"
-        "scripts/setup.sh"
-        "scripts/uninstall.sh"
+        "scripts/check.sh"
         "scripts/scan.sh"
         "scripts/audit.sh"
         "scripts/report.sh"
+        "scripts/uninstall.sh"
     )
 
     # Passes array by name
@@ -53,7 +54,4 @@ download() {
 }
 
 download
-source scripts/detect-secrets/activate.sh
-check_python
-ensure_env
-install
+source scripts/detect-secrets/init.sh

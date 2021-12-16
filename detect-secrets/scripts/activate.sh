@@ -1,7 +1,10 @@
 #!/bin/bash
 set -euo pipefail
 
-CURRENT_PATH=$(pwd -P)
+PARENT_PATH=$(
+    cd "$(dirname "${BASH_SOURCE[0]}")"
+    pwd -P
+)
 PYTHON_REF=null
 VENV_PATH=${VIRTUAL_ENV:-}
 
@@ -24,7 +27,7 @@ check_python() {
 }
 
 activate() {
-    VENV_PATH="$CURRENT_PATH/.venv"
+    VENV_PATH="$PARENT_PATH/.venv"
 
     if [[ ! -d "$VENV_PATH" ]]; then
         echo "Creating environment @ '$VENV_PATH'"
@@ -33,13 +36,13 @@ activate() {
 
     echo "Activating environment @ '$VENV_PATH'"
     if [ "$(uname)" == "Darwin" ]; then
-        . .venv/bin/activate
+        . $VENV_PATH/bin/activate
     elif [ "$(expr substr $(uname -s) 1 5)" == "Linux" ]; then
-        . .venv/bin/activate
+        . $VENV_PATH/bin/activate
     elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW32_NT" ]; then
-        . .venv/scripts/activate
+        . $VENV_PATH/scripts/activate
     elif [ "$(expr substr $(uname -s) 1 10)" == "MINGW64_NT" ]; then
-        . .venv/scripts/activate
+        . $VENV_PATH/scripts/activate
     fi
 }
 
