@@ -1,7 +1,6 @@
 #!/bin/bash
 set -euo pipefail
 
-CURRENT_PATH=$(pwd -P)
 PARENT_PATH=$(
     cd "$(dirname "${BASH_SOURCE[0]}")"
     pwd -P
@@ -18,14 +17,6 @@ uninstall() {
     fi
 }
 
-cleanup() {
-    echo "Cleaning up environment for pre-commit..."
-    deactivate
-    rm -rf $VENV_PATH
-    rm -rf $PARENT_PATH
-}
-
 check_python
 ensure_env
 uninstall
-cleanup
