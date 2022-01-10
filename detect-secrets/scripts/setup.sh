@@ -43,7 +43,7 @@ download() {
 
     ASSETS=(
         ".secrets.baseline"
-        "secrets-wordlist.txt"
+        "secrets-allow-list.txt"
         ".pre-commit-config.yaml"
     )
 
