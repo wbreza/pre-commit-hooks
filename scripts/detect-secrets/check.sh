@@ -15,7 +15,7 @@ if which detect-secrets-hook >/dev/null 2>&1; then
     VERSION=$(detect-secrets-hook --version)
 
     echo "Found detect-secrets-hook with version $VERSION"
-    git diff --staged --name-only -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline --word-list secrets-wordlist.txt
+    git diff --staged --name-only -z | xargs -0 detect-secrets-hook --baseline .secrets.baseline --word-list secrets-allow-list.txt
 else
     echo "detect-secrets-hook not found. Run setup script and try again"
 fi

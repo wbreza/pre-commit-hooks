@@ -17,7 +17,7 @@ if which detect-secrets >/dev/null 2>&1; then
     echo "Found detect-secrets with version $VERSION"
     detect-secrets scan \
         --baseline .secrets.baseline \
-        --word-list secrets-wordlist.txt
+        --word-list secrets-allow-list.txt
 
     echo "Secrets baseline has been updated  with any detected changes."
     echo "Please review all baseline updates before committing changes."

@@ -8,7 +8,7 @@ repos:
             "--baseline",
             ".secrets.baseline",
             "--word-list",
-            "secrets-wordlist.txt",
+            "secrets-allow-list.txt",
           ]
         additional_dependencies:
           - pyahocorasick
