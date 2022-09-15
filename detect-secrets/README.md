@@ -69,7 +69,7 @@ At this point you will have the option to identify whether each result is a real
 
 ```bash
 # Calls the `detect-secrets audit .secrets.baseline` command
-./scripts/detect-secrets/scan.sh
+./scripts/detect-secrets/audit.sh
 ```
 
 ### Report on your baseline
